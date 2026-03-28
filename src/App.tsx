@@ -1,120 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { Routes, Route } from 'react-router-dom'
+import { Layout } from './components/layout/Layout'
+import { ProtectedRoute, AdminRoute } from './components/ProtectedRoute'
+import { LoginPage }        from './pages/LoginPage'
+import { AuthCallbackPage } from './pages/AuthCallbackPage'
+import { HomePage }         from './pages/HomePage'
+
+// Placeholder pages — sẽ tạo dần các bước tiếp theo
+const PlaceholderPage = ({ name }: { name: string }) => (
+  <div className="max-w-7xl mx-auto px-4 py-12">
+    <h2 className="text-2xl font-medium text-gray-400">{name}</h2>
+    <p className="text-gray-400 mt-2">Đang phát triển...</p>
+  </div>
+)
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <Routes>
+      {/* Public */}
+      <Route path="/login"         element={<LoginPage />} />
+      <Route path="/auth/callback" element={<AuthCallbackPage />} />
 
-      <div className="ticks"></div>
+      {/* Main layout */}
+      <Route element={<Layout />}>
+        <Route path="/"                element={<HomePage />} />
+        <Route path="/sessions"        element={<PlaceholderPage name="Phiên đấu giá" />} />
+        <Route path="/sessions/:id"    element={<PlaceholderPage name="Chi tiết phiên" />} />
+        <Route path="/auctions/:id"    element={<PlaceholderPage name="Phòng đấu giá" />} />
+        <Route path="/items/:id"       element={<PlaceholderPage name="Chi tiết vật phẩm" />} />
+        <Route path="/items/submit"    element={<PlaceholderPage name="Ký gửi vật phẩm" />} />
+        <Route path="/market"          element={<PlaceholderPage name="Chợ Đen" />} />
+        <Route path="/market/:id"      element={<PlaceholderPage name="Chi tiết listing" />} />
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        {/* Protected */}
+        <Route path="/me/profile"   element={<ProtectedRoute><PlaceholderPage name="Hồ sơ" /></ProtectedRoute>} />
+        <Route path="/me/inventory" element={<ProtectedRoute><PlaceholderPage name="Kho đồ" /></ProtectedRoute>} />
+        <Route path="/me/wallet"    element={<ProtectedRoute><PlaceholderPage name="Ví tiền" /></ProtectedRoute>} />
+        <Route path="/me/watchlist" element={<ProtectedRoute><PlaceholderPage name="Watchlist" /></ProtectedRoute>} />
+        <Route path="/me/notifications" element={<ProtectedRoute><PlaceholderPage name="Thông báo" /></ProtectedRoute>} />
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        {/* Admin */}
+        <Route path="/admin"              element={<AdminRoute><PlaceholderPage name="Admin Dashboard" /></AdminRoute>} />
+        <Route path="/admin/items"        element={<AdminRoute><PlaceholderPage name="Admin Items" /></AdminRoute>} />
+        <Route path="/admin/sessions"     element={<AdminRoute><PlaceholderPage name="Admin Sessions" /></AdminRoute>} />
+        <Route path="/admin/users"        element={<AdminRoute><PlaceholderPage name="Admin Users" /></AdminRoute>} />
+        <Route path="/admin/transactions" element={<AdminRoute><PlaceholderPage name="Admin Transactions" /></AdminRoute>} />
+        <Route path="/admin/analytics"    element={<AdminRoute><PlaceholderPage name="Admin Analytics" /></AdminRoute>} />
+      </Route>
+    </Routes>
   )
 }
 
