@@ -7,6 +7,9 @@ import { HomePage }         from './pages/HomePage'
 import { SessionListPage }  from './pages/SessionListPage'
 import { SessionDetailPage } from './pages/SessionDetailPage'
 import { AuctionRoomPage }   from './pages/AuctionRoomPage'
+import { WalletPage }        from './pages/WalletPage'
+import { ProfilePage }       from './pages/ProfilePage'
+import { PublicProfilePage } from './pages/PublicProfilePage'
 
 // Placeholder pages — sẽ tạo dần các bước tiếp theo
 const PlaceholderPage = ({ name }: { name: string }) => (
@@ -35,6 +38,9 @@ function App() {
         <Route path="/market/:id"      element={<PlaceholderPage name="Chi tiết listing" />} />
 
         {/* Protected */}
+        <Route path="/me/wallet"  element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
+        <Route path="/me/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+        <Route path="/users/:id"  element={<PublicProfilePage />} />
         <Route path="/me/profile"   element={<ProtectedRoute><PlaceholderPage name="Hồ sơ" /></ProtectedRoute>} />
         <Route path="/me/inventory" element={<ProtectedRoute><PlaceholderPage name="Kho đồ" /></ProtectedRoute>} />
         <Route path="/me/wallet"    element={<ProtectedRoute><PlaceholderPage name="Ví tiền" /></ProtectedRoute>} />
