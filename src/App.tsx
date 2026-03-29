@@ -4,6 +4,7 @@ import { ProtectedRoute, AdminRoute } from './components/ProtectedRoute'
 import { LoginPage }        from './pages/LoginPage'
 import { AuthCallbackPage } from './pages/AuthCallbackPage'
 import { HomePage }         from './pages/HomePage'
+import { SessionListPage }  from './pages/SessionListPage'
 
 // Placeholder pages — sẽ tạo dần các bước tiếp theo
 const PlaceholderPage = ({ name }: { name: string }) => (
@@ -23,7 +24,7 @@ function App() {
       {/* Main layout */}
       <Route element={<Layout />}>
         <Route path="/"                element={<HomePage />} />
-        <Route path="/sessions"        element={<PlaceholderPage name="Phiên đấu giá" />} />
+        <Route path="/sessions" element={<SessionListPage />} />
         <Route path="/sessions/:id"    element={<PlaceholderPage name="Chi tiết phiên" />} />
         <Route path="/auctions/:id"    element={<PlaceholderPage name="Phòng đấu giá" />} />
         <Route path="/items/:id"       element={<PlaceholderPage name="Chi tiết vật phẩm" />} />
