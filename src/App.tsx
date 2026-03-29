@@ -5,6 +5,8 @@ import { LoginPage }        from './pages/LoginPage'
 import { AuthCallbackPage } from './pages/AuthCallbackPage'
 import { HomePage }         from './pages/HomePage'
 import { SessionListPage }  from './pages/SessionListPage'
+import { SessionDetailPage } from './pages/SessionDetailPage'
+import { AuctionRoomPage }   from './pages/AuctionRoomPage'
 
 // Placeholder pages — sẽ tạo dần các bước tiếp theo
 const PlaceholderPage = ({ name }: { name: string }) => (
@@ -25,8 +27,8 @@ function App() {
       <Route element={<Layout />}>
         <Route path="/"                element={<HomePage />} />
         <Route path="/sessions" element={<SessionListPage />} />
-        <Route path="/sessions/:id"    element={<PlaceholderPage name="Chi tiết phiên" />} />
-        <Route path="/auctions/:id"    element={<PlaceholderPage name="Phòng đấu giá" />} />
+        <Route path="/sessions/:id" element={<SessionDetailPage />} />
+        <Route path="/auctions/:id" element={<AuctionRoomPage />} />
         <Route path="/items/:id"       element={<PlaceholderPage name="Chi tiết vật phẩm" />} />
         <Route path="/items/submit"    element={<PlaceholderPage name="Ký gửi vật phẩm" />} />
         <Route path="/market"          element={<PlaceholderPage name="Chợ Đen" />} />
@@ -46,6 +48,8 @@ function App() {
         <Route path="/admin/users"        element={<AdminRoute><PlaceholderPage name="Admin Users" /></AdminRoute>} />
         <Route path="/admin/transactions" element={<AdminRoute><PlaceholderPage name="Admin Transactions" /></AdminRoute>} />
         <Route path="/admin/analytics"    element={<AdminRoute><PlaceholderPage name="Admin Analytics" /></AdminRoute>} />
+      
+        
       </Route>
     </Routes>
   )
