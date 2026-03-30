@@ -24,6 +24,12 @@ import { NotificationsPage } from './pages/NotificationsPage'
 import { WatchlistPage }     from './pages/WatchlistPage'
 import { SubmitItemPage }    from './pages/SubmitItemPage'
 
+import { AdminDashboard }        from './pages/admin/AdminDashboard'
+import { AdminItemsPage }        from './pages/admin/AdminItemsPage'
+import { AdminUsersPage }        from './pages/admin/AdminUsersPage'
+import { AdminTransactionsPage } from './pages/admin/AdminTransactionsPage'
+import { AdminSessionsPage }     from './pages/admin/AdminSessionsPage'
+
 const PlaceholderPage = ({ name }: { name: string }) => (
   <div className="max-w-7xl mx-auto px-4 py-12">
     <h2 className="text-2xl font-medium text-gray-400">{name}</h2>
@@ -77,22 +83,22 @@ function App() {
 
         {/* Admin routes */}
         <Route path="/admin"
-          element={<AdminRoute><PlaceholderPage name="Admin Dashboard" /></AdminRoute>}
+            element={<AdminRoute><AdminDashboard /></AdminRoute>}
         />
         <Route path="/admin/items"
-          element={<AdminRoute><PlaceholderPage name="Quản lý vật phẩm" /></AdminRoute>}
+          element={<AdminRoute><AdminItemsPage /></AdminRoute>}
         />
         <Route path="/admin/sessions"
-          element={<AdminRoute><PlaceholderPage name="Quản lý phiên đấu giá" /></AdminRoute>}
+          element={<AdminRoute><AdminSessionsPage /></AdminRoute>}
         />
         <Route path="/admin/sessions/:id"
           element={<AdminRoute><PlaceholderPage name="Chi tiết phiên" /></AdminRoute>}
         />
         <Route path="/admin/users"
-          element={<AdminRoute><PlaceholderPage name="Quản lý người dùng" /></AdminRoute>}
+          element={<AdminRoute><AdminUsersPage /></AdminRoute>}
         />
         <Route path="/admin/transactions"
-          element={<AdminRoute><PlaceholderPage name="Duyệt tài chính" /></AdminRoute>}
+          element={<AdminRoute><AdminTransactionsPage /></AdminRoute>}
         />
         <Route path="/admin/analytics"
           element={<AdminRoute><PlaceholderPage name="Thống kê" /></AdminRoute>}
