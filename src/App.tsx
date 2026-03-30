@@ -20,6 +20,10 @@ import { WalletPage }        from './pages/WalletPage'
 import { ProfilePage }       from './pages/ProfilePage'
 import { InventoryPage }     from './pages/InventoryPage'
 
+import { NotificationsPage } from './pages/NotificationsPage'
+import { WatchlistPage }     from './pages/WatchlistPage'
+import { SubmitItemPage }    from './pages/SubmitItemPage'
+
 const PlaceholderPage = ({ name }: { name: string }) => (
   <div className="max-w-7xl mx-auto px-4 py-12">
     <h2 className="text-2xl font-medium text-gray-400">{name}</h2>
@@ -48,9 +52,16 @@ function App() {
         <Route path="/items/:id"    element={<PlaceholderPage name="Chi tiết vật phẩm" />} />
 
         {/* Protected routes */}
-        <Route path="/items/submit"
-          element={<ProtectedRoute><PlaceholderPage name="Ký gửi vật phẩm" /></ProtectedRoute>}
+        <Route path="/me/notifications"
+          element={<ProtectedRoute><NotificationsPage /></ProtectedRoute>}
         />
+        <Route path="/me/watchlist"
+          element={<ProtectedRoute><WatchlistPage /></ProtectedRoute>}
+        />
+        <Route path="/items/submit"
+          element={<ProtectedRoute><SubmitItemPage /></ProtectedRoute>}
+        />
+        
         <Route path="/me/profile"
           element={<ProtectedRoute><ProfilePage /></ProtectedRoute>}
         />
@@ -59,12 +70,6 @@ function App() {
         />
         <Route path="/me/inventory"
           element={<ProtectedRoute><InventoryPage /></ProtectedRoute>}
-        />
-        <Route path="/me/watchlist"
-          element={<ProtectedRoute><PlaceholderPage name="Watchlist" /></ProtectedRoute>}
-        />
-        <Route path="/me/notifications"
-          element={<ProtectedRoute><PlaceholderPage name="Thông báo" /></ProtectedRoute>}
         />
         <Route path="/me/ratings"
           element={<ProtectedRoute><PlaceholderPage name="Đánh giá" /></ProtectedRoute>}
