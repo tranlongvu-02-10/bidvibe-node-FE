@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { Bell, ChevronDown, Menu, X } from 'lucide-react'
 import { useAuth } from '../../hooks/useAuth'
 import { useNotificationStore } from '../../store/notificationStore'
 import { formatVND } from '../../utils/format'
 import { useWalletStore } from '../../store/walletStore'
+import { Bell, ChevronDown, Menu, X, Sun, Moon } from 'lucide-react'
+import { useDarkMode } from '../../hooks/useDarkMode'
 
 export const Navbar = () => {
   const { user, logoutUser } = useAuth()
@@ -13,6 +14,7 @@ export const Navbar = () => {
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const { isDark, toggle } = useDarkMode()
 
   return (
     <nav className="sticky top-0 z-50 bg-white dark:bg-gray-950 border-b border-gray-100 dark:border-gray-800">
@@ -49,6 +51,17 @@ export const Navbar = () => {
                   {formatVND(wallet.balanceAvailable)}
                 </Link>
               )}
+
+              {/* Dark mode toggle */}
+              <button
+                onClick={toggle}
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+              >
+                {isDark
+                  ? <Sun  size={15} className="text-amber-400" />
+                  : <Moon size={15} className="text-gray-500"  />
+                }
+              </button>
 
               {/* Bell */}
               <Link to="/me/notifications" className="relative w-9 h-9 flex items-center justify-center rounded-lg border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800">
