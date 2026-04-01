@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { Navbar } from './Navbar'
+import { useAuth } from '../../hooks/useAuth'
 import { useAuthStore } from '../../store/authStore'
 import { useNotificationStore } from '../../store/notificationStore'
 import { connectWs, subscribeToTopic } from '../../ws/wsClient'
@@ -9,10 +10,11 @@ import { notificationApi } from '../../api/notificationApi'
 import type { Notification } from '../../types'
 
 export const Layout = () => {
+  useAuth()
+
   const { user } = useAuthStore()
   const { addNotification, setUnreadCount } = useNotificationStore()
 
-  // Load unread count
   const { data: unreadData } = useQuery({
     queryKey: ['unread-count'],
     queryFn:  notificationApi.getUnreadCount,
@@ -24,12 +26,9 @@ export const Layout = () => {
     if (unreadData) setUnreadCount(unreadData.count)
   }, [unreadData, setUnreadCount])
 
-  // Connect WS khi login
   useEffect(() => {
     if (!user) return
-
     connectWs(() => {
-      // Subscribe notification cá nhân
       subscribeToTopic(`/user/queue/notifications`, (data: unknown) => {
         const notif = data as Notification
         addNotification(notif)

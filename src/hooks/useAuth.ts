@@ -1,5 +1,4 @@
 import { useEffect } from 'react'
-// import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuthStore } from '../store/authStore'
 import { userApi } from '../api/userApi'
@@ -8,18 +7,36 @@ export const useAuth = () => {
   const { user, isLoading, setUser, setLoading, logout } = useAuthStore()
 
   useEffect(() => {
-    // thay đổi auth state từ Supabase
+    // Kiểm tra session hiện tại ngay khi load
+    const initAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (session) {
+          const profile = await userApi.getMe()
+          setUser(profile)
+        } else {
+          setUser(null)
+        }
+      } catch {
+        setUser(null)
+      } finally {
+        setLoading(false)  // ← luôn set false dù thành công hay thất bại
+      }
+    }
+
+    initAuth()
+
+    // Lắng nghe thay đổi auth
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
-        if (session) {
+        if (event === 'SIGNED_IN' && session) {
           try {
-            // Lấy user profile từ backend
             const profile = await userApi.getMe()
             setUser(profile)
           } catch {
             setUser(null)
           }
-        } else {
+        } else if (event === 'SIGNED_OUT') {
           setUser(null)
         }
         setLoading(false)
@@ -41,6 +58,7 @@ export const useAuth = () => {
   const logoutUser = async () => {
     await supabase.auth.signOut()
     logout()
+    setLoading(false)
   }
 
   return { user, isLoading, loginWithGoogle, logoutUser }
